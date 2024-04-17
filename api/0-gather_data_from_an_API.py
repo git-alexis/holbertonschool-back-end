@@ -9,7 +9,6 @@ if __name__ == "__main__":
         print("Usage: {} employee_id".format(argv[0]))
         exit(1)
 
-    "Take url"
     user_id = argv[1]
     url_1 = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
     user = get(url_1).json()
