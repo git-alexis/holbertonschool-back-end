@@ -1,21 +1,21 @@
 #!/usr/bin/python3
 
-import sys
-import requests
+from sys import argv, exit
+from requests import get
 import json
 
 if __name__ == "__main__":
 
     all_data = {}
     url_1 = "https://jsonplaceholder.typicode.com/users"
-    users = requests.get(url_1).json()
+    users = get(url_1).json()
 
     for user in users:
         user_id = user.get("id")
         username = user.get("username")
         url_2 = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
             user_id)
-        todos = requests.get(url_2).json()
+        todos = get(url_2).json()
 
         user_data = []
         for task in todos:
