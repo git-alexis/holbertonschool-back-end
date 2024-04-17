@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 
-from requests import get
-from sys import argv, exit
+import requests
+import sys
 
 if __name__ == "__main__":
 
-    if len(argv) < 2:
+    if len(sys.argv) < 2:
         print("Usage: {} employee_id".format(argv[0]))
         exit(1)
 
-    user_id = argv[1]
+    user_id = sys.argv[1]
     url_1 = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
-    user = get(url_1).json()
+    user = requests.get(url_1).json()
     url_2 = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
         user_id)
-    todos = get(url_2).json()
+    todos = requests.get(url_2).json()
 
     completed = []
     for task in todos:
