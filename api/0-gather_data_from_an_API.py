@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from sys import argv, exit
 from requests import get
+from sys import argv, exit
 
 if __name__ == "__main__":
 
