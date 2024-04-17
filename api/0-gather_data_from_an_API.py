@@ -1,26 +1,26 @@
 #!/usr/bin/python3
 """ Gather data from an API """
 
-from sys import argv, exit
-from requests import get
+import requests
+import sys
 
 if __name__ == "__main__":
 
     """ Check if the user provided an employee ID """
-    if len(argv) < 2:
-        print("Usage: {} employee_id".format(argv[0]))
+    if len(sys.argv) < 2:
+        print("Usage: {} employee_id".format(sys.argv[0]))
         exit(1)
 
-    user_id = argv[1]
+    user_id = sys.argv[1]
 
     """ Get the user data """
     url_1 = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
-    user = get(url_1).json()
+    user = requests.get(url_1).json()
 
     """ Get the user's tasks """
     url_2 = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
         user_id)
-    todos = get(url_2).json()
+    todos = requests.get(url_2).json()
 
     """ Count the number of completed tasks """
     completed = []
