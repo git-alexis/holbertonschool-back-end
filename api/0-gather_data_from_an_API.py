@@ -1,28 +1,31 @@
 #!/usr/bin/python3
+""" using this REST API """
 
-from sys import argv, exit
-from requests import get
+import requests
+import sys
+
+API_URL = "https://jsonplaceholder.typicode.com/"
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: ./0-gather_data_from_an_API.py <employee id>")
+        sys.exit(1)
 
-    if len(argv) < 2:
-        print("Usage: {} employee_id".format(argv[0]))
-        exit(1)
+    id = sys.argv[1]
 
-    user_id = argv[1]
-    url_1 = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
-    user = get(url_1).json()
-    url_2 = "https://jsonplaceholder.typicode.com/todos?userId={}".format(
-        user_id)
-    todos = get(url_2).json()
+    """ check user's information """
+    employee = requests.get(API_URL + "users/{}".format(id)).json()
 
-    completed = []
-    for task in todos:
-        if task.get("completed") is True:
-            completed.append(task)
+    """ check user's to do list """
+    todo_list = requests.get("{}todos?userId={}".format(API_URL, id)).json()
 
+    """ filter for task complete """
+    completed_tasks = [task.get("title")
+                       for task in todo_list if task.get("completed") is True]
+
+    """ display progression """
     print("Employee {} is done with tasks({}/{}):".format(
-        user.get("name"), len(completed), len(todos)))
+        employee.get("name"), len(completed_tasks), len(todo_list)))
 
-    for task in completed:
-        print("\t {}".format(task.get("title")))
+    for task in completed_tasks:
+        print("\t {}".format(task))
